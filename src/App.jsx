@@ -2,16 +2,21 @@
 /* eslint-disable no-undef */
 // import "./index.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // const initialItems = [
 //   { id: 1, description: "Passports", quantity: 2, packed: false },
 //   { id: 2, description: "Socks", quantity: 12, packed: true },
 //   { id: 2, description: "Charger", quantity: 1, packed: false },
 // ];
+const itemFromStorage = JSON.parse(localStorage.getItem("items") || "[]");
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(itemFromStorage);
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
   function handleAddNewItems(item) {
     setItems((items) => [...items, item]);
